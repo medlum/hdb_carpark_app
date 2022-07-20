@@ -23,7 +23,7 @@ m = folium.Map(location=[1.3521, 103.8198],
 
 #cp_filter = st.selectbox("Select Carpark", [address[2] for address in complete_list])
 #st.sidebar.write("HDB CARPARK")
-st.sidebar.header("Real-Time HDB Carpark Availability")
+#st.sidebar.header("Real-Time HDB Carpark Availability")
 st.sidebar.subheader("Current Date & Time")
 st.sidebar.subheader(f"{now_modifed}")
 filter2 = st.sidebar.multiselect("Select Carpark", location)
