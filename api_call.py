@@ -9,6 +9,7 @@ from cp_dict import cp_dict
 
 # ------------------ set time and connect api ------------------ #
 global data
+global now_modifed
 # set to system current datetime and remove microsecond
 now_dt = datetime.datetime.today().replace(microsecond=0)
 # convert string to include T in the required api query parameter
