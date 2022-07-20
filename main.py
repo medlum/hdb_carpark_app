@@ -9,6 +9,7 @@ from api_call import now_modifed
 st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
 st.title("Real-Time HDB Carpark Availability")
 #st.subheader(f"Current Date & Time : {now_modifed}")
+st.text("data source: https://data.gov.sg/")
 st.text("[V1.0] Andy Oh | School of Business & Acccountancy | Ngee Ann Polytechnic".upper())
 
 location = sorted(list(set([address[2] for address in complete_list])))
