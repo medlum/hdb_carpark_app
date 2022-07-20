@@ -8,7 +8,7 @@ from api_call import now_modifed
 
 st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
 st.title("Real-Time HDB Carpark Availability")
-st.subheader(f"Current Date & Time: {now_modifed}")
+st.subheader(f"Current Date & Time : {now_modifed}")
 st.text("[V1.0] Andy Oh | School of Business & Acccountancy | Ngee Ann Polytechnic".upper())
 
 location = sorted(list(set([address[2] for address in complete_list])))
@@ -23,6 +23,7 @@ m = folium.Map(location=[1.3521, 103.8198],
 
 #cp_filter = st.selectbox("Select Carpark", [address[2] for address in complete_list])
 #st.sidebar.write("HDB CARPARK")
+st.sidebar.subheader(f"{now_modifed}")
 filter2 = st.sidebar.multiselect("Select Carpark", location)
 
 for index in range(len(complete_list)):
