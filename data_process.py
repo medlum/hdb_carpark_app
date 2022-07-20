@@ -3,6 +3,7 @@ from api_call import data
 from cp_dict import cp_dict
 
 # ------------------ data processing ------------------ #
+global complete_list
 cp_code = []
 total_lots = []
 avail_lots = []
