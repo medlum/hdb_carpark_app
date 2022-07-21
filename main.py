@@ -3,13 +3,18 @@ import streamlit_folium
 import streamlit as st
 from streamlit_folium import folium_static
 from folium.plugins import MarkerCluster
-#from data_process import complete_list
-from api_call import now_modifed
-import requests
-import datetime
-import time
+import requests, datetime, time, json, config
 from cp_dict import cp_dict
-# ------------------------- api call ----------------------------#
+
+# ------------------------- lta api call ----------------------------#
+url = "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2"
+#headers = {"AccountKey": config.lta_apikey,
+#           "accept": "application/json"}
+headers = {"AccountKey": st.secrets["LTA_APIKEY"],
+           "accept": "application/json"}
+response = requests.request(method="get", url=url, headers=headers)
+lta_data = response.json()
+# ------------------------- data.gov.sg api call ----------------------------#
 
 # set to system current datetime and remove microsecond
 now_dt = datetime.datetime.today().replace(microsecond=0)
@@ -28,7 +33,17 @@ query_params = {'date_time': now_T}
 data = requests.get(endpoint, params=query_params).json()
 
 
-# ------------------------- api call ----------------------------#
+# ------------------------- data process malls ----------------------------#
+malls = []
+for item in lta_data["value"]:
+    if item["Area"] != "":
+        malls.append([item["Development"], float(item["Location"].split(" ")[
+                     0]), float(item["Location"].split(" ")[1]), item["AvailableLots"]])
+
+mall_names = [mall[0] for mall in malls]
+print(malls)
+
+# ------------------------- data process hdb ----------------------------#
 cp_code = []
 total_lots = []
 avail_lots = []
@@ -61,20 +76,9 @@ for index in range(len(cp_code) - 1):
                               total_lots[index],
                               avail_lots[index]])
 
-
-
-
-
-
-
-
-
-
-
-
-# -------------------------map and stream ----------------------------#
+# ------------------------- map and stream ----------------------------#
 st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
-st.title("Real-Time HDB Carpark Availability")
+st.title("Real-Time Carpark Availability")
 #st.subheader(f"Current Date & Time : {now_modifed}")
 st.text("data source: https://data.gov.sg/")
 st.text("[V1.0] Andy Oh | School of Business & Acccountancy | Ngee Ann Polytechnic".upper())
@@ -89,34 +93,50 @@ m = folium.Map(location=[1.3521, 103.8198],
                 tiles="CartoDB positron",
                 name="Light Map")
 
-#cp_filter = st.selectbox("Select Carpark", [address[2] for address in complete_list])
-#st.sidebar.write("HDB CARPARK")
-#st.sidebar.header("Real-Time HDB Carpark Availability")
 st.sidebar.subheader("Current Date & Time")
 st.sidebar.subheader(f"{now_modifed}")
-filter2 = st.sidebar.multiselect("Select Carpark", location)
+filter_hdb = st.sidebar.multiselect("Select HDB carpark locations", location)
+filter_malls = st.sidebar.multiselect("Select mall locations:", mall_names)
 
-for index in range(len(complete_list)):
-    if complete_list[index][2] not in filter2:
-        pass
+if len(filter_malls) != 0:
 
-    else:
-        total = complete_list[index][10]
-        avail = complete_list[index][11]
-        type = complete_list[index][6]
-        short = complete_list[index][7]
-        free = complete_list[index][8]
-        night = complete_list[index][9]
-
-
-        custom_icon = folium.CustomIcon(icon_image='carpark_logo.jpg', icon_size=(20, 20))       
-        poopup = folium.Popup(f" TOTAL LOTS: {total} <br> AVAILABLE LOTS: {avail} <br> CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
-                              min_width=300, max_width=300)
+    for index in range(len(malls)):
+        if malls[index][0] not in filter_malls:
+            pass
+        else:
+            mall_selected = malls[index][0]
+            lots_avail = malls[index][3]
+            lat = malls[index][1]
+            long = malls[index][2]
         
-        folium.Marker(location=[complete_list[index][4], complete_list[index][5]],
-        popup=poopup,
-        tooltip=complete_list[index][3],
-        icon=custom_icon).add_to(m)
+            custom_icon = folium.CustomIcon(icon_image='mall_icon.png', icon_size=(30, 30))
+            poopup = folium.Popup(f"AVAILABLE LOTS: {lots_avail}")
+            folium.Marker(location=[lat, long], tooltip=(f"{mall_selected} <br> Available Lots: {lots_avail}"), icon=custom_icon).add_to(m)
+
+if len(filter_hdb) != 0:
+
+    for index in range(len(complete_list)):
+        if complete_list[index][2] not in filter_hdb:
+            pass
+        else:
+            total = complete_list[index][10]
+            avail = complete_list[index][11]
+            type = complete_list[index][6]
+            short = complete_list[index][7]
+            free = complete_list[index][8]
+            night = complete_list[index][9]
+            lat = complete_list[index][4]
+            long = complete_list[index][5]
+            hdb_selected = complete_list[index][3]
+
+            custom_icon = folium.CustomIcon(icon_image='carpark_logo.jpg', icon_size=(20, 20))       
+            poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
+                                min_width=300, max_width=300)
+            
+            folium.Marker(location=[lat, long],
+            popup=poopup,
+            tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
+            icon=custom_icon).add_to(m)
 
 folium_static(m, width=1000, height=560)
 
