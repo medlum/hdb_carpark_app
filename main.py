@@ -3,9 +3,76 @@ import streamlit_folium
 import streamlit as st
 from streamlit_folium import folium_static
 from folium.plugins import MarkerCluster
-from data_process import complete_list
+#from data_process import complete_list
 from api_call import now_modifed
+import requests
+import datetime
+import time
+from cp_dict import cp_dict
+# ------------------------- api call ----------------------------#
 
+# set to system current datetime and remove microsecond
+now_dt = datetime.datetime.today().replace(microsecond=0)
+# convert string to include T in the required api query parameter
+now_str = str(now_dt)
+# include T in current datetime as a required api query parameter
+now_T = now_str.replace(' ', 'T')
+# add 8 hours server due to timezone difference in streamlit
+now_modifed = str(now_dt + datetime.timedelta(hours=8))
+
+# api url
+endpoint = "https://api.data.gov.sg/v1/transport/carpark-availability"
+# query parameter
+query_params = {'date_time': now_T}
+# get data and convert to json
+data = requests.get(endpoint, params=query_params).json()
+
+
+# ------------------------- api call ----------------------------#
+cp_code = []
+total_lots = []
+avail_lots = []
+complete_list = []
+# data variable is from api_call
+for item in data["items"]:
+    for detail in item["carpark_data"]:
+        # extract carpark_code, total lots and available lots
+        cp_code.append(detail['carpark_number'])
+        total_lots.append(detail["carpark_info"][0]["total_lots"])
+        avail_lots.append(detail["carpark_info"][0]["lots_available"])
+
+# removed first element as it is not useful
+total_lots = total_lots[1:]
+avail_lots = avail_lots[1:]
+
+# combined details in cp_dict with the extracted data from api
+for index in range(len(cp_code) - 1):
+    if cp_code[index] in cp_dict:
+        complete_list.append([index,
+                              cp_code[index],
+                              cp_dict[cp_code[index]][0],
+                              cp_dict[cp_code[index]][1],
+                              float(cp_dict[cp_code[index]][2]),
+                              float(cp_dict[cp_code[index]][3]),
+                              cp_dict[cp_code[index]][4],
+                              cp_dict[cp_code[index]][5],
+                              cp_dict[cp_code[index]][6],
+                              cp_dict[cp_code[index]][7],
+                              total_lots[index],
+                              avail_lots[index]])
+
+
+
+
+
+
+
+
+
+
+
+
+# -------------------------map and stream ----------------------------#
 st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
 st.title("Real-Time HDB Carpark Availability")
 #st.subheader(f"Current Date & Time : {now_modifed}")
