@@ -3,7 +3,7 @@ import streamlit_folium
 import streamlit as st
 from streamlit_folium import folium_static
 from folium.plugins import MarkerCluster
-import requests, datetime, time, json, config
+import requests, datetime, time, json
 from cp_dict import cp_dict
 
 # ------------------------- lta api call ----------------------------#
