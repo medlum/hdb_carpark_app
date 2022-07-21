@@ -84,66 +84,60 @@ st.title("Carpark Availability in Real-Time")
 st.text("data source: data.gov.sg and datamall.lta.gov.sg")
 st.text("[V1.0] Andy Oh | School of Business & Acccountancy | Ngee Ann Polytechnic".upper())
 st.header(f"Current Date Time | {now_modifed}")
-c1, c2 = st.columns((1, 4))
 
-with c1:
+filter_hdb = st.sidebar.multiselect("Multi-select HDB carpark:", location)
+filter_malls = st.sidebar.multiselect("Multi-select mall:", mall_names)
 
-    filter_hdb = st.multiselect("Multi-select HDB carpark:", location)
-    filter_malls = st.multiselect("Multi-select mall:", mall_names)
-
-with c2:
-
-
-    m = folium.Map(location=[1.3521, 103.8198],
-                min_zoom=11,
-                max_zoom=18,
-                zoom_start=12,
-                max_bounds=True,
-                tiles="CartoDB positron",
-                name="Light Map")
+m = folium.Map(location=[1.3521, 103.8198],
+            min_zoom=11,
+            max_zoom=18,
+            zoom_start=12,
+            max_bounds=True,
+            tiles="CartoDB positron",
+            name="Light Map")
 
 
-    if len(filter_malls) != 0:
+if len(filter_malls) != 0:
 
-        for index in range(len(malls)):
-            if malls[index][0] not in filter_malls:
-                pass
-            else:
-                mall_selected = malls[index][0]
-                lots_avail = malls[index][3]
-                lat = malls[index][1]
-                long = malls[index][2]
+    for index in range(len(malls)):
+        if malls[index][0] not in filter_malls:
+            pass
+        else:
+            mall_selected = malls[index][0]
+            lots_avail = malls[index][3]
+            lat = malls[index][1]
+            long = malls[index][2]
+        
+            custom_icon = folium.CustomIcon(icon_image='mall_icon.png', icon_size=(30, 30))
+            poopup = folium.Popup(f"AVAILABLE LOTS: {lots_avail}")
+            folium.Marker(location=[lat, long], tooltip=(f"{mall_selected} <br> Available Lots: {lots_avail}"), icon=custom_icon).add_to(m)
+
+if len(filter_hdb) != 0:
+
+    for index in range(len(complete_list)):
+        if complete_list[index][2] not in filter_hdb:
+            pass
+        else:
+            total = complete_list[index][10]
+            avail = complete_list[index][11]
+            type = complete_list[index][6]
+            short = complete_list[index][7]
+            free = complete_list[index][8]
+            night = complete_list[index][9]
+            lat = complete_list[index][4]
+            long = complete_list[index][5]
+            hdb_selected = complete_list[index][3]
+
+            custom_icon = folium.CustomIcon(icon_image='carpark_logo.jpg', icon_size=(20, 20))       
+            poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
+                                min_width=300, max_width=300)
             
-                custom_icon = folium.CustomIcon(icon_image='mall_icon.png', icon_size=(30, 30))
-                poopup = folium.Popup(f"AVAILABLE LOTS: {lots_avail}")
-                folium.Marker(location=[lat, long], tooltip=(f"{mall_selected} <br> Available Lots: {lots_avail}"), icon=custom_icon).add_to(m)
+            folium.Marker(location=[lat, long],
+            popup=poopup,
+            tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
+            icon=custom_icon).add_to(m)
 
-    if len(filter_hdb) != 0:
-
-        for index in range(len(complete_list)):
-            if complete_list[index][2] not in filter_hdb:
-                pass
-            else:
-                total = complete_list[index][10]
-                avail = complete_list[index][11]
-                type = complete_list[index][6]
-                short = complete_list[index][7]
-                free = complete_list[index][8]
-                night = complete_list[index][9]
-                lat = complete_list[index][4]
-                long = complete_list[index][5]
-                hdb_selected = complete_list[index][3]
-
-                custom_icon = folium.CustomIcon(icon_image='carpark_logo.jpg', icon_size=(20, 20))       
-                poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
-                                    min_width=300, max_width=300)
-                
-                folium.Marker(location=[lat, long],
-                popup=poopup,
-                tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
-                icon=custom_icon).add_to(m)
-
-    folium_static(m, width=1000, height=560)
+folium_static(m, width=1000, height=560)
 
 #poopup = folium.Popup(
 #f"Total Lots: {coord[7]} <br> Available Lots: {coord[8]} <br> Type of Carpark: {coord[5]} <br> Short Term Parking: {coord[6]}", min_width = 300, max_width = 300)
