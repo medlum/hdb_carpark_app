@@ -85,7 +85,7 @@ st.text("data source: data.gov.sg and datamall.lta.gov.sg")
 st.text("[V1.0] Andy Oh | School of Business & Acccountancy | Ngee Ann Polytechnic".upper())
 st.header(f"Current Date Time | {now_modifed}")
 
-st.sidebar.subheader("{now_modifed}")
+st.sidebar.subheader(f"{now_modifed}")
 filter_hdb = st.sidebar.multiselect("Multi-select HDB carpark:", location)
 filter_malls = st.sidebar.multiselect("Multi-select mall:", mall_names)
 
