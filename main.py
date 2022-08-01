@@ -6,6 +6,7 @@ from folium.plugins import MarkerCluster
 import requests, datetime, time, json
 from cp_dict import cp_dict
 from folium.features import DivIcon
+from utils import *
 
 # ------------------------- lta api call ----------------------------#
 url = "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2"
@@ -99,16 +100,35 @@ def mall_DivIcon(mall_selected, lots_avail):
     )
     return icon
 
-# ------------------------- map and stream ----------------------------#
-st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
-st.title("Carpark Availability in Real-Time")
-st.text("data source: data.gov.sg and datamall.lta.gov.sg")
-st.text("[V1.0] Andy Oh | School of Business & Acccountancy | Ngee Ann Polytechnic".upper())
-st.header(f"Current Date Time | {now_modifed}")
 
-st.sidebar.subheader(f"{now_modifed}")
+# ------------------------- map and stream ----------------------------#
+st.set_page_config(
+    page_title='Bus ',
+    page_icon=':shark:',
+    layout="centered",
+    menu_items={"About": "Data is updated on one minute interval"}
+)
+#set_bg("assets/wallpaper.jpg")
+head()
+
+
+#st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
+#st.title("Carpark Availability in Real-Time")
+#st.text("data source: data.gov.sg and datamall.lta.gov.sg")
+#st.text("[V1.0] Andy Oh | School of Business & Acccountancy | Ngee Ann Polytechnic".upper())
+#st.header(f"Current Date Time | {now_modifed}")
+
+#st.sidebar.subheader(f"{now_modifed}")
 filter_hdb = st.sidebar.multiselect("Multi-select HDB carpark:", location)
 filter_malls = st.sidebar.multiselect("Multi-select mall:", mall_names)
+
+text1 = """
+ <p style='text-align: left; color:GreenYellow';'>
+ Map displays the selected carparks and display the number of parkings lots available \U0001F68F</p>
+"""
+st.sidebar.write(text1, unsafe_allow_html=True)
+st.write(
+    f"<p style='text-align: left; color:GreenYellow'>f"Current date time: {now_modifed}"} </p>", unsafe_allow_html=True)
 
 m = folium.Map(location=[1.3521, 103.8198],
             min_zoom=11,
