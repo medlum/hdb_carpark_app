@@ -85,8 +85,8 @@ location = sorted(list(set([address[2] for address in complete_list])))
 def hdb_DivIcon(hdb_selected, total, available):
     icon = DivIcon(
         icon_size=(180, 180),
-        icon_anchor=(20, 40),
-        html=f'<p style="font-size: 10pt; color : DarkSlateGray"> {hdb_selected} <br> <br> Total Lots: {total} <br> Available Lots: {available}</strong></p>'
+        icon_anchor=(10,40),
+        html=f'<p style="font-size: 10pt; color : DarkSlateGray"> {hdb_selected} <br> <br> <br> Total Lots: {total} <br> Available Lots: {available}</strong></p>'
     )
     return icon
 
