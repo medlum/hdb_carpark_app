@@ -107,7 +107,7 @@ st.set_page_config(
     layout="wide",
     menu_items={"About": "Data is updated on one minute interval"}
 )
-set_bg("wallpaper.jpg")
+set_bg("wallpaper2.jpg")
 head()
 st.write(
     f"<p style='text-align: left; color:GreenYellow'> Current Date Time: {now_modifed}</p>", unsafe_allow_html=True)
