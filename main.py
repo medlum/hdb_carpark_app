@@ -43,7 +43,6 @@ for item in lta_data["value"]:
                      0]), float(item["Location"].split(" ")[1]), item["AvailableLots"]])
 
 mall_names = [mall[0] for mall in malls]
-print(malls)
 
 # ------------------------- data process hdb ----------------------------#
 cp_code = []
@@ -108,7 +107,7 @@ st.set_page_config(
     layout="wide",
     menu_items={"About": "Data is updated on one minute interval"}
 )
-#set_bg("wallpaper2.jpg")
+set_bg("wallpaper.jpg")
 head()
 st.write(
     f"<p style='text-align: left; color:GreenYellow'> Current Date Time: {now_modifed}</p>", unsafe_allow_html=True)
@@ -192,7 +191,7 @@ text1 = """
  Map displays the number of parkings lots available in the select carparks.</p>
 """
 
-with st.expander("Click to view map"):
+with st.expander("View Map"):
     st.write(text1, unsafe_allow_html=True)
     folium_static(m, width=250, height=500)
 
