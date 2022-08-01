@@ -191,7 +191,7 @@ text1 = """
 """
 st.write(text1, unsafe_allow_html=True)
 with st.expander("Click to view map"):
-    folium_static(m, width=500, height=500)
+    folium_static(m, width=250, height=500)
 
 #poopup = folium.Popup(
 #f"Total Lots: {coord[7]} <br> Available Lots: {coord[8]} <br> Type of Carpark: {coord[5]} <br> Short Term Parking: {coord[6]}", min_width = 300, max_width = 300)
