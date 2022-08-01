@@ -111,7 +111,7 @@ st.set_page_config(
 #set_bg("wallpaper2.jpg")
 head()
 st.write(
-    f"<p style='text-align: left; color:GreenYellow'> Data is updated on one minute interval <br> Current Date Time: {now_modifed} </p>", unsafe_allow_html=True)
+    f"<p style='text-align: left; color:GreenYellow'> Current Date Time: {now_modifed} <br> Data is updated on one minute interval</p>", unsafe_allow_html=True)
 
 #st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
 #st.title("Carpark Availability in Real-Time")
@@ -154,7 +154,7 @@ if len(filter_malls) != 0:
             folium.Marker(location=[lat, long],
                           icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
 
-            st.metric(label=mall_selected, value=lots_avail)
+            st.metric(label=mall_selected, value=st.write(f"<p style='text-align: left; color:GreenYellow'> {lots_avail} </p>", unsafe_allow_html=True))
 
 if len(filter_hdb) != 0:
 
@@ -183,6 +183,8 @@ if len(filter_hdb) != 0:
 
             #folium.Marker(location=[lat, long],
             #              icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
+
+            st.metric(label=hdb_selected, value=avail)
 
 
 text1 = """
