@@ -86,15 +86,15 @@ def hdb_DivIcon(hdb_selected, total, available):
     icon = DivIcon(
         icon_size=(180, 180),
         icon_anchor=(40,40),
-        html=f'<p style="font-size: 10pt; color : DarkSlateGray"> {hdb_selected} <br> <br> <br> Total {total} <br> Available {available}</strong></p>'
+        html=f'<p style="font-size: 9pt; color : DarkSlateGray"> {hdb_selected} <br> <br> <br> Total {total} <br> Available {available}</strong></p>'
     )
     return icon
 
 
 def mall_DivIcon(mall_selected, lots_avail):
     icon = DivIcon(
-        icon_size=(90, 90),
-        icon_anchor=(20, 60),
+        icon_size=(180, 180),
+        icon_anchor=(40, 40),
         html=f'<p style="font-size: 10pt; color : DarkSlateGray"> <strong> {mall_selected} <br> <br> <br> Total: {lots_avail}</strong></p>'
     )
     return icon
