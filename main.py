@@ -86,7 +86,7 @@ def hdb_DivIcon(hdb_selected, total, available):
     icon = DivIcon(
         icon_size=(250, 250),
         icon_anchor=(120,35),
-        html=f'<p style= "font-size: 9pt; color : DarkSlateGray; text-align: center"> {hdb_selected} <br> <br> <br> Total {total} <br> Available {available}</strong></p>'
+        html=f'<p style= "font-size: 10pt; color : DarkSlateGray; text-align: center"> {hdb_selected} <br> <br> <br> Total {total} <br> Available {available}</strong></p>'
     )
     return icon
 
