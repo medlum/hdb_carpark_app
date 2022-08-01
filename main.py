@@ -5,6 +5,7 @@ from streamlit_folium import folium_static
 from folium.plugins import MarkerCluster
 import requests, datetime, time, json
 from cp_dict import cp_dict
+from folium.features import DivIcon
 
 # ------------------------- lta api call ----------------------------#
 url = "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2"
@@ -78,6 +79,26 @@ for index in range(len(cp_code) - 1):
 
 location = sorted(list(set([address[2] for address in complete_list])))
 
+# ---------------- create icon -----------------------#
+
+
+def hdb_DivIcon(hdb_selected, total, available):
+    icon = DivIcon(
+        icon_size=(90, 90),
+        icon_anchor=(20, 60),
+        html=f'<p style="font-size: 10pt; color : DarkSlateGray"> <strong> Carpark {hdb_selected} <br> <br> <br> Total: {total} <br> Available {available}</strong></p>'
+    )
+    return icon
+
+
+def mall_DivIcon(mall_selected, lots_avail):
+    icon = DivIcon(
+        icon_size=(90, 90),
+        icon_anchor=(20, 60),
+        html=f'<p style="font-size: 10pt; color : DarkSlateGray"> <strong> Marll: {mall_selected} <br> <br> <br> Total: {lots_avail}</strong></p>'
+    )
+    return icon
+
 # ------------------------- map and stream ----------------------------#
 st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
 st.title("Carpark Availability in Real-Time")
@@ -134,9 +155,13 @@ if len(filter_hdb) != 0:
                                 min_width=300, max_width=300)
             
             folium.Marker(location=[lat, long],
-            popup=poopup,
-            tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
-            icon=custom_icon).add_to(m)
+                          popup=poopup, icon=custom_icon).add_to(m)
+            #tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
+            #icon=custom_icon).add_to(m)
+
+            folium.Marker(location=[lat, long],
+            icon=hdb_DivIcon(hdb_selected, total, avail))
+
 
 folium_static(m, width=1000, height=560)
 
