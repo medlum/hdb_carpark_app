@@ -156,13 +156,13 @@ if len(filter_hdb) != 0:
             #poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
             #                    min_width=300, max_width=300)
             
-            folium.Marker(location=[lat, long], tooltip= folium.Tooltip(f"{hdb_selected} <br> Total {total} <br> Available {avail}", permanent=True),
+            folium.Marker(location=[lat, long], tooltip= folium.Tooltip(f"{hdb_selected} <br> Total {total} <br> Available {avail}"),
                           icon=custom_icon).add_to(m)
             #tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
             #icon=custom_icon).add_to(m)
 
-            folium.Marker(location=[lat, long],
-                          icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
+            #folium.Marker(location=[lat, long],
+            #              icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
 
 
 folium_static(m, width=1000, height=560)
