@@ -110,7 +110,8 @@ st.set_page_config(
 )
 #set_bg("wallpaper2.jpg")
 head()
-
+st.write(
+    f"<p style='text-align: left; color:GreenYellow'> Data is updated on one minute interval <br> Current Date Time: {now_modifed} </p>", unsafe_allow_html=True)
 
 #st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
 #st.title("Carpark Availability in Real-Time")
@@ -126,15 +127,6 @@ with st.expander("HDB"):
 with st.expander("Shopping Mall"):
     filter_malls = st.multiselect("You may select more than one", mall_names)
 
-text1 = """
- <p style='text-align: left; color:GreenYellow';'>
- Map displays the number of parkings lots available in the select carparks.</p>
-"""
-#st.sidebar.write(text1, unsafe_allow_html=True)
-
-
-st.write(
-    f"<p style='text-align: left; color:GreenYellow'> Data is updated on one minute interval <br> Current Time: {now_modifed} </p>", unsafe_allow_html=True)
 
 m = folium.Map(location=[1.3521, 103.8198],
             min_zoom=11,
@@ -192,6 +184,12 @@ if len(filter_hdb) != 0:
             #folium.Marker(location=[lat, long],
             #              icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
 
+
+text1 = """
+ <p style='text-align: left; color:GreenYellow';'>
+ Map displays the number of parkings lots available in the select carparks.</p>
+"""
+st.write(text1, unsafe_allow_html=True)
 with st.expander("Click to view map"):
     folium_static(m, width=500, height=500)
 
