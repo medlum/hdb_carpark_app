@@ -95,7 +95,7 @@ def mall_DivIcon(mall_selected, lots_avail):
     icon = DivIcon(
         icon_size=(180, 180),
         icon_anchor=(40, 40),
-        html=f'<p style="font-size: 10pt; color : DarkSlateGray"> <strong> {mall_selected} <br> <br> <br> Total: {lots_avail}</strong></p>'
+        html=f'<p style="font-size: 10pt; color : DarkSlateGray; text-align: center"> <strong> {mall_selected} <br> <br> <br> Total: {lots_avail}</strong></p>'
     )
     return icon
 
