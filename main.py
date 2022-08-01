@@ -138,53 +138,53 @@ m = folium.Map(location=[1.3521, 103.8198],
 
 
 if len(filter_malls) != 0:
+    with st.spinner("Wait for it..."):
+        for index in range(len(malls)):
+            if malls[index][0] not in filter_malls:
+                pass
+            else:
+                mall_selected = malls[index][0]
+                lots_avail = malls[index][3]
+                lat = malls[index][1]
+                long = malls[index][2]
+            
+                custom_icon = folium.CustomIcon(icon_image='mall_icon.png', icon_size=(30, 30))
+                folium.Marker(location=[lat, long], icon=custom_icon).add_to(m)
+                #tooltip = (f"{mall_selected} <br> Available Lots: {lots_avail}"),
+                folium.Marker(location=[lat, long],
+                            icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
 
-    for index in range(len(malls)):
-        if malls[index][0] not in filter_malls:
-            pass
-        else:
-            mall_selected = malls[index][0]
-            lots_avail = malls[index][3]
-            lat = malls[index][1]
-            long = malls[index][2]
-        
-            custom_icon = folium.CustomIcon(icon_image='mall_icon.png', icon_size=(30, 30))
-            folium.Marker(location=[lat, long], icon=custom_icon).add_to(m)
-            #tooltip = (f"{mall_selected} <br> Available Lots: {lots_avail}"),
-            folium.Marker(location=[lat, long],
-                          icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
-
-            st.metric(label=mall_selected, value=lots_avail)
+                st.metric(label=mall_selected, value=lots_avail)
 
 if len(filter_hdb) != 0:
+    with st.spinner("Wait for it..."):
+        for index in range(len(complete_list)):
+            if complete_list[index][2] not in filter_hdb:
+                pass
+            else:
+                total = complete_list[index][10]
+                avail = complete_list[index][11]
+                type = complete_list[index][6]
+                short = complete_list[index][7]
+                free = complete_list[index][8]
+                night = complete_list[index][9]
+                lat = complete_list[index][4]
+                long = complete_list[index][5]
+                hdb_selected = complete_list[index][3]
 
-    for index in range(len(complete_list)):
-        if complete_list[index][2] not in filter_hdb:
-            pass
-        else:
-            total = complete_list[index][10]
-            avail = complete_list[index][11]
-            type = complete_list[index][6]
-            short = complete_list[index][7]
-            free = complete_list[index][8]
-            night = complete_list[index][9]
-            lat = complete_list[index][4]
-            long = complete_list[index][5]
-            hdb_selected = complete_list[index][3]
+                custom_icon = folium.CustomIcon(icon_image='carpark_logo.jpg', icon_size=(20, 20))       
+                #poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
+                #                    min_width=300, max_width=300)
+                
+                folium.Marker(location=[lat, long], tooltip= folium.Tooltip(f"{hdb_selected} <br> Total {total} <br> Available {avail}"),
+                            icon=custom_icon).add_to(m)
+                #tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
+                #icon=custom_icon).add_to(m)
 
-            custom_icon = folium.CustomIcon(icon_image='carpark_logo.jpg', icon_size=(20, 20))       
-            #poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
-            #                    min_width=300, max_width=300)
-            
-            folium.Marker(location=[lat, long], tooltip= folium.Tooltip(f"{hdb_selected} <br> Total {total} <br> Available {avail}"),
-                          icon=custom_icon).add_to(m)
-            #tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
-            #icon=custom_icon).add_to(m)
+                #folium.Marker(location=[lat, long],
+                #              icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
 
-            #folium.Marker(location=[lat, long],
-            #              icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
-
-            st.metric(label=hdb_selected, value=avail)
+                st.metric(label=hdb_selected, value=avail)
 
 
 text1 = """
