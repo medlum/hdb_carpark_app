@@ -111,7 +111,7 @@ st.set_page_config(
 #set_bg("wallpaper2.jpg")
 head()
 st.write(
-    f"<p style='text-align: left; color:GreenYellow'> Current Date Time: {now_modifed} <br> Data is updated on one minute interval</p>", unsafe_allow_html=True)
+    f"<p style='text-align: left; color:GreenYellow'> Current Date Time: {now_modifed}</p>", unsafe_allow_html=True)
 
 #st.set_page_config(page_title="hello", page_icon=":shark:", layout="wide")
 #st.title("Carpark Availability in Real-Time")
@@ -194,6 +194,9 @@ text1 = """
 st.write(text1, unsafe_allow_html=True)
 with st.expander("Click to view map"):
     folium_static(m, width=250, height=500)
+
+st.write(
+    f"<p style='text-align: left; color:LightGray'> Data is updated on one minute interval</p>", unsafe_allow_html=True)
 
 #poopup = folium.Popup(
 #f"Total Lots: {coord[7]} <br> Available Lots: {coord[8]} <br> Type of Carpark: {coord[5]} <br> Short Term Parking: {coord[6]}", min_width = 300, max_width = 300)
