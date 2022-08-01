@@ -128,7 +128,7 @@ text1 = """
 """
 st.sidebar.write(text1, unsafe_allow_html=True)
 st.write(
-    f"<p style='text-align: left; color:GreenYellow'>f"Current date time: {now_modifed}"} </p>", unsafe_allow_html=True)
+    f"<p style='text-align: left; color:GreenYellow'> Current Time: {now_modifed} </p>", unsafe_allow_html=True)
 
 m = folium.Map(location=[1.3521, 103.8198],
             min_zoom=11,
