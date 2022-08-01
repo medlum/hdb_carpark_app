@@ -108,7 +108,7 @@ st.set_page_config(
     layout="wide",
     menu_items={"About": "Data is updated on one minute interval"}
 )
-set_bg("wallpaper.jpg")
+#set_bg("wallpaper2.jpg")
 head()
 
 
@@ -119,8 +119,9 @@ head()
 #st.header(f"Current Date Time | {now_modifed}")
 
 #st.sidebar.subheader(f"{now_modifed}")
-filter_hdb = st.sidebar.multiselect("Multi-select HDB carpark:", location)
-filter_malls = st.sidebar.multiselect("Multi-select mall:", mall_names)
+with st.expander("Select Carparks"):
+    filter_hdb = st.multiselect("Multi-select HDB carpark:", location)
+    filter_malls = st.multiselect("Multi-select mall:", mall_names)
 
 text1 = """
  <p style='text-align: left; color:GreenYellow';'>
