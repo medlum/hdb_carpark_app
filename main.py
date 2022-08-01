@@ -155,6 +155,7 @@ if len(filter_malls) != 0:
                             icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
 
                 st.metric(label=mall_selected, value=lots_avail)
+    st.success('Done!')
 
 if len(filter_hdb) != 0:
     with st.spinner("Wait for it..."):
