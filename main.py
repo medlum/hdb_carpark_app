@@ -131,11 +131,10 @@ if len(filter_malls) != 0:
             long = malls[index][2]
         
             custom_icon = folium.CustomIcon(icon_image='mall_icon.png', icon_size=(30, 30))
-            poopup = folium.Popup(f"AVAILABLE LOTS: {lots_avail}")
-            folium.Marker(location=[lat, long], tooltip=(f"{mall_selected} <br> Available Lots: {lots_avail}"), icon=custom_icon).add_to(m)
-
+            folium.Marker(location=[lat, long], icon=custom_icon).add_to(m)
+            #tooltip = (f"{mall_selected} <br> Available Lots: {lots_avail}"),
             folium.Marker(location=[lat, long],
-                          popup=poopup, icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
+                          icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
 
 if len(filter_hdb) != 0:
 
