@@ -95,7 +95,7 @@ def mall_DivIcon(mall_selected, lots_avail):
     icon = DivIcon(
         icon_size=(180, 180),
         icon_anchor=(100, 35),
-        html=f'<p style="font-size: 10pt; color : DarkSlateGray; text-align: center"> <strong> {mall_selected} <br> <br> <br> Total: {lots_avail}</strong></p>'
+        html=f'<p style="font-size: 10pt; color : DarkSlateGray; text-align: center"> <strong> {mall_selected} <br> <br> <br> Available: {lots_avail}</strong></p>'
     )
     return icon
 
@@ -153,11 +153,11 @@ if len(filter_hdb) != 0:
             hdb_selected = complete_list[index][3]
 
             custom_icon = folium.CustomIcon(icon_image='carpark_logo.jpg', icon_size=(20, 20))       
-            poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
-                                min_width=300, max_width=300)
+            #poopup = folium.Popup(f"CARPARK TYPE:{type} <br> SHORT TERM PARKING: {short} <br> FREE PARKING: {free} <br> NIGHT PARKING: {night}",
+            #                    min_width=300, max_width=300)
             
-            folium.Marker(location=[lat, long],
-                          popup=poopup, icon=custom_icon).add_to(m)
+            folium.Marker(location=[lat, long], tooltip= folium.Tooltip(f"{hdb_selected} <br> Total {total} <br> Available {avail}", permanent=True),
+                          icon=custom_icon).add_to(m)
             #tooltip=f"{hdb_selected} <br> Total lots: {total} <br> Available lots: {avail}",
             #icon=custom_icon).add_to(m)
 
