@@ -127,7 +127,11 @@ text1 = """
  <p style='text-align: left; color:GreenYellow';'>
  Map displays the number of parkings lots available in the select carparks.</p>
 """
-st.sidebar.write(text1, unsafe_allow_html=True)
+#st.sidebar.write(text1, unsafe_allow_html=True)
+
+
+
+
 st.write(
     f"<p style='text-align: left; color:GreenYellow'> Data is updated on one minute interval <br> Current Time: {now_modifed} </p>", unsafe_allow_html=True)
 
@@ -157,6 +161,8 @@ if len(filter_malls) != 0:
             folium.Marker(location=[lat, long],
                           icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
 
+            st.metric(label=mall_selected, value=lots_avail)
+
 if len(filter_hdb) != 0:
 
     for index in range(len(complete_list)):
@@ -185,8 +191,8 @@ if len(filter_hdb) != 0:
             #folium.Marker(location=[lat, long],
             #              icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
 
-
-folium_static(m, width=1000, height=560)
+with st.expander("Click to view map"):
+    folium_static(m, width=1000, height=560)
 
 #poopup = folium.Popup(
 #f"Total Lots: {coord[7]} <br> Available Lots: {coord[8]} <br> Type of Carpark: {coord[5]} <br> Short Term Parking: {coord[6]}", min_width = 300, max_width = 300)
