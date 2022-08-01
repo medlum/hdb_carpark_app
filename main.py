@@ -119,17 +119,18 @@ head()
 #st.header(f"Current Date Time | {now_modifed}")
 
 #st.sidebar.subheader(f"{now_modifed}")
-with st.expander("Select Carparks"):
-    filter_hdb = st.multiselect("Multi-select HDB carpark:", location)
-    filter_malls = st.multiselect("Multi-select mall:", mall_names)
+with st.expander("HDB"):
+    filter_hdb = st.multiselect("You may select more than one", location)
+    
+
+with st.expander("Shopping Mall"):
+    filter_malls = st.multiselect("You may select more than one", mall_names)
 
 text1 = """
  <p style='text-align: left; color:GreenYellow';'>
  Map displays the number of parkings lots available in the select carparks.</p>
 """
 #st.sidebar.write(text1, unsafe_allow_html=True)
-
-
 
 
 st.write(
@@ -192,7 +193,7 @@ if len(filter_hdb) != 0:
             #              icon=hdb_DivIcon(hdb_selected, total, avail)).add_to(m)
 
 with st.expander("Click to view map"):
-    folium_static(m, width=1000, height=560)
+    folium_static(m, width=500, height=500)
 
 #poopup = folium.Popup(
 #f"Total Lots: {coord[7]} <br> Available Lots: {coord[8]} <br> Type of Carpark: {coord[5]} <br> Short Term Parking: {coord[6]}", min_width = 300, max_width = 300)
