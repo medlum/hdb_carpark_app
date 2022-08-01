@@ -105,7 +105,7 @@ def mall_DivIcon(mall_selected, lots_avail):
 st.set_page_config(
     page_title='Bus ',
     page_icon=':shark:',
-    layout="centered",
+    layout="wide",
     menu_items={"About": "Data is updated on one minute interval"}
 )
 #set_bg("assets/wallpaper.jpg")
@@ -124,7 +124,7 @@ filter_malls = st.sidebar.multiselect("Multi-select mall:", mall_names)
 
 text1 = """
  <p style='text-align: left; color:GreenYellow';'>
- Map displays the selected carparks and display the number of parkings lots available \U0001F68F</p>
+ Map displays the number of parkings lots available in the select carparks.</p>
 """
 st.sidebar.write(text1, unsafe_allow_html=True)
 st.write(
