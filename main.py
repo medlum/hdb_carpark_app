@@ -154,7 +154,7 @@ if len(filter_malls) != 0:
             folium.Marker(location=[lat, long],
                           icon=mall_DivIcon(mall_selected, lots_avail)).add_to(m)
 
-            st.metric(label=mall_selected, value=st.write(f"<p style='text-align: left; color:GreenYellow'> {lots_avail} </p>", unsafe_allow_html=True))
+            st.metric(label=mall_selected, value=lots_avail)
 
 if len(filter_hdb) != 0:
 
